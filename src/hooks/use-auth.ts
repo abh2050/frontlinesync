@@ -32,15 +32,15 @@ export function useAuth() {
       
       console.log('Login successful, setting user:', mockUser)
       setCurrentUser(mockUser)
+      setIsLoading(false)
       toast.success(`Welcome back, ${mockUser.name}!`)
       return { success: true }
     } catch (error) {
       console.error('Login error:', error)
       const errorMessage = error instanceof Error ? error.message : 'Invalid credentials'
+      setIsLoading(false)
       toast.error(errorMessage)
       return { success: false, error: errorMessage }
-    } finally {
-      setIsLoading(false)
     }
   }
 
@@ -48,9 +48,11 @@ export function useAuth() {
     try {
       console.log('Logging out user:', currentUser?.email)
       
+      // Set loading state to provide immediate feedback
+      setIsLoading(true)
+      
       // Clear user data immediately for responsive UI
       setCurrentUser(null)
-      setIsLoading(false)
       
       // Clear any other auth-related data stored in KV
       try {
@@ -61,6 +63,9 @@ export function useAuth() {
       } catch (kvError) {
         console.warn('Some KV cleanup failed:', kvError)
       }
+      
+      // Reset loading state
+      setIsLoading(false)
       
       toast.success('Successfully signed out')
       console.log('User logged out successfully')

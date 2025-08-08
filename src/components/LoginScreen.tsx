@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuth } from '@/hooks/use-auth'
 import { Users, MessageCircle, Calendar, Shield } from '@phosphor-icons/react'
+import { toast } from 'sonner'
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('')
