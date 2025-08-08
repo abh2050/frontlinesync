@@ -7,6 +7,17 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { useAuth } from '@/hooks/use-auth'
 import { useKV } from '@github/spark/hooks'
 import { 
@@ -26,6 +37,7 @@ import { Credential, User as UserType } from '@/types'
 export default function UserProfile() {
   const { user, logout } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false)
   const [credentials, setCredentials] = useKV<Credential[]>('user_credentials', [])
   const [profileData, setProfileData] = useKV<Partial<UserType>>('profile_data', {})
 
@@ -48,6 +60,11 @@ export default function UserProfile() {
   const skills = user?.skills || ['Food Safety', 'Customer Service', 'POS Systems', 'Team Leadership']
 
   const completionPercentage = Math.round((activeCredentials.length / (activeCredentials.length + expiredCredentials.length + 2)) * 100)
+
+  const handleLogout = async () => {
+    await logout()
+    setShowLogoutDialog(false)
+  }
 
   return (
     <div className="p-4 space-y-6 md:p-6 md:pl-72">
@@ -307,9 +324,27 @@ export default function UserProfile() {
                 <h3 className="font-medium text-red-600">Sign Out</h3>
                 <p className="text-sm text-muted-foreground">Sign out of your account</p>
               </div>
-              <Button variant="outline" onClick={logout}>
-                Sign Out
-              </Button>
+              <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive">
+                    Sign Out
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Sign Out</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to sign out? You'll need to log in again to access your account.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleLogout} className="bg-destructive hover:bg-destructive/90">
+                      Sign Out
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </CardContent>

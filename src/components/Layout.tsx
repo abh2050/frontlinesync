@@ -1,9 +1,20 @@
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { House, MessageCircle, Calendar, User, ChartBar, Users, ClipboardText, Shield } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
 interface LayoutProps {
   children: ReactNode
@@ -13,6 +24,7 @@ interface LayoutProps {
 
 export default function Layout({ children, currentView, onViewChange }: LayoutProps) {
   const { user, logout } = useAuth()
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false)
   
   const employeeNavItems = [
     { id: 'dashboard', label: 'Home', icon: House },
@@ -30,6 +42,11 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
   ]
 
   const navItems = user?.role === 'manager' ? managerNavItems : employeeNavItems
+
+  const handleLogout = async () => {
+    await logout()
+    setShowLogoutDialog(false)
+  }
 
   return (
     <div className="flex flex-col h-screen bg-background">
@@ -52,14 +69,31 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
               {user?.name?.split(' ').map(n => n[0]).join('')}
             </AvatarFallback>
           </Avatar>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={logout}
-            className="text-muted-foreground"
-          >
-            Sign Out
-          </Button>
+          <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+            <AlertDialogTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+              >
+                Sign Out
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Sign Out</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to sign out? You'll need to log in again to access your account.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleLogout} className="bg-destructive hover:bg-destructive/90">
+                  Sign Out
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </header>
 

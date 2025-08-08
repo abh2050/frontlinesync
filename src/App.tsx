@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/use-auth'
 import LoginScreen from '@/components/LoginScreen'
 import Layout from '@/components/Layout'
@@ -11,7 +11,18 @@ import { Toaster } from '@/components/ui/sonner'
 
 function App() {
   const { isAuthenticated, user } = useAuth()
-  const [currentView, setCurrentView] = useState(user?.role === 'manager' ? 'analytics' : 'dashboard')
+  const [currentView, setCurrentView] = useState('dashboard')
+
+  // Reset view when user changes or logs out
+  useEffect(() => {
+    if (user?.role === 'manager') {
+      setCurrentView('analytics')
+    } else if (user?.role === 'employee') {
+      setCurrentView('dashboard')
+    } else {
+      setCurrentView('dashboard')
+    }
+  }, [user?.role, isAuthenticated])
 
   const renderView = () => {
     if (user?.role === 'manager') {
