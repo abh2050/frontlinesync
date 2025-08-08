@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react'
-import { House, MessageCircle, Calendar, User, ChartBar, Users, ClipboardText, Shield } from '@phosphor-icons/react'
+import { House, MessageCircle, Calendar, User, ChartBar, Users, ClipboardText, Shield, Sparkle } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
@@ -39,6 +39,7 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
     { id: 'schedule', label: 'Schedule', icon: Calendar },
     { id: 'compliance', label: 'Compliance', icon: Shield },
     { id: 'sops', label: 'SOPs', icon: ClipboardText },
+    { id: 'ai-config', label: 'AI Settings', icon: Sparkle },
   ]
 
   const navItems = user?.role === 'manager' ? managerNavItems : employeeNavItems
@@ -104,7 +105,10 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
 
       {/* Bottom Navigation (Mobile) */}
       <nav className="bg-card border-t border-border md:hidden">
-        <div className="grid grid-cols-4 md:grid-cols-5">
+        <div className={cn(
+          "grid gap-0",
+          user?.role === 'manager' ? "grid-cols-6 overflow-x-auto" : "grid-cols-4"
+        )}>
           {navItems.map((item) => {
             const Icon = item.icon
             const isActive = currentView === item.id
@@ -114,14 +118,14 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
                 key={item.id}
                 onClick={() => onViewChange(item.id)}
                 className={cn(
-                  "flex flex-col items-center py-3 px-2 text-xs font-medium transition-colors",
+                  "flex flex-col items-center py-3 px-2 text-xs font-medium transition-colors min-w-0",
                   isActive 
                     ? "text-primary bg-primary/5" 
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <Icon className={cn("w-6 h-6 mb-1", isActive && "text-primary")} />
-                <span className="truncate">{item.label}</span>
+                <Icon className={cn("w-5 h-5 mb-1", isActive && "text-primary")} />
+                <span className="truncate text-[11px]">{item.label}</span>
               </button>
             )
           })}

@@ -7,6 +7,7 @@ import AIChat from '@/components/chat/AIChat'
 import ShiftManagement from '@/components/schedule/ShiftManagement'
 import UserProfile from '@/components/profile/UserProfile'
 import ManagerAnalytics from '@/components/manager/ManagerAnalytics'
+import GeminiConfig from '@/components/admin/GeminiConfig'
 import { Toaster } from '@/components/ui/sonner'
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
           return <div className="p-6 md:pl-72">Compliance Dashboard - Coming Soon</div>
         case 'sops':
           return <div className="p-6 md:pl-72">SOP Management - Coming Soon</div>
+        case 'ai-config':
+          return <div className="p-6 md:pl-72"><GeminiConfig /></div>
         default:
           return <ManagerAnalytics />
       }
