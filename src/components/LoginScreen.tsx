@@ -17,10 +17,12 @@ export default function LoginScreen() {
     await login(email, password)
   }
 
-  const demoLogin = (role: 'employee' | 'manager') => {
+  const demoLogin = async (role: 'employee' | 'manager') => {
     const demoEmail = role === 'manager' ? 'manager@workforce.com' : 'employee@workforce.com'
     setEmail(demoEmail)
     setPassword('demo123')
+    // Automatically login with demo credentials
+    await login(demoEmail, 'demo123')
   }
 
   return (
@@ -104,15 +106,17 @@ export default function LoginScreen() {
                     variant="secondary"
                     className="w-full text-sm"
                     onClick={() => demoLogin('employee')}
+                    disabled={isLoading}
                   >
-                    Demo Employee Account
+                    {isLoading ? 'Logging in...' : 'Demo Employee Account'}
                   </Button>
                   <Button
                     variant="secondary"
                     className="w-full text-sm"
                     onClick={() => demoLogin('manager')}
+                    disabled={isLoading}
                   >
-                    Demo Manager Account
+                    {isLoading ? 'Logging in...' : 'Demo Manager Account'}
                   </Button>
                 </div>
               )}
