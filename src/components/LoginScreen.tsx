@@ -22,6 +22,7 @@ export default function LoginScreen() {
     const demoEmail = role === 'manager' ? 'manager@workforce.com' : 'employee@workforce.com'
     console.log(`Attempting demo login for ${role} with email: ${demoEmail}`)
     
+    // Set form fields for visual feedback
     setEmail(demoEmail)
     setPassword('demo123')
     
@@ -30,7 +31,9 @@ export default function LoginScreen() {
       const result = await login(demoEmail, 'demo123')
       console.log('Demo login result:', result)
       if (!result.success) {
-        toast.error(`Demo login failed: ${result.error}`)
+        toast.error(`Demo login failed: ${result.error || 'Unknown error'}`)
+      } else {
+        console.log(`✅ Successfully logged in as ${role}`)
       }
     } catch (error) {
       console.error('Demo login error:', error)
@@ -114,14 +117,17 @@ export default function LoginScreen() {
               </Button>
               
               {showDemoAccounts && (
-                <div className="space-y-2">
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground text-center">
+                    Quick access demo accounts for testing
+                  </p>
                   <Button
                     variant="secondary"
                     className="w-full text-sm"
                     onClick={() => demoLogin('employee')}
                     disabled={isLoading}
                   >
-                    {isLoading ? 'Logging in...' : 'Demo Employee Account'}
+                    {isLoading ? 'Logging in...' : '👤 Demo Employee Account'}
                   </Button>
                   <Button
                     variant="secondary"
@@ -129,8 +135,11 @@ export default function LoginScreen() {
                     onClick={() => demoLogin('manager')}
                     disabled={isLoading}
                   >
-                    {isLoading ? 'Logging in...' : 'Demo Manager Account'}
+                    {isLoading ? 'Logging in...' : '👨‍💼 Demo Manager Account'}
                   </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Or use any email containing "manager" for manager access
+                  </p>
                 </div>
               )}
             </div>
