@@ -11,26 +11,34 @@ export function useAuth() {
     try {
       console.log('Attempting login for:', email)
       
+      // Validate credentials (basic check for demo)
+      if (!email || !password) {
+        throw new Error('Email and password are required')
+      }
+      
       // Simulate API call - in real app this would be actual authentication
       await new Promise(resolve => setTimeout(resolve, 1000))
       
       // Mock user data based on email
       const mockUser: User = {
         id: Date.now().toString(),
-        email,
+        email: email.toLowerCase().trim(),
         name: email.includes('manager') ? 'Sarah Johnson' : 'Alex Rivera',
         role: email.includes('manager') ? 'manager' : 'employee',
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
-        department: 'Kitchen',
+        department: email.includes('manager') ? 'Operations' : 'Kitchen',
         skills: email.includes('manager') ? ['Leadership', 'Operations'] : ['Food Safety', 'Customer Service']
       }
       
       console.log('Login successful, setting user:', mockUser)
       setCurrentUser(mockUser)
+      toast.success(`Welcome back, ${mockUser.name}!`)
       return { success: true }
     } catch (error) {
       console.error('Login error:', error)
-      return { success: false, error: 'Invalid credentials' }
+      const errorMessage = error instanceof Error ? error.message : 'Invalid credentials'
+      toast.error(errorMessage)
+      return { success: false, error: errorMessage }
     } finally {
       setIsLoading(false)
     }
@@ -40,15 +48,19 @@ export function useAuth() {
     try {
       console.log('Logging out user:', currentUser?.email)
       
-      // Clear user data
+      // Clear user data immediately for responsive UI
       setCurrentUser(null)
+      setIsLoading(false)
       
       // Clear any other auth-related data stored in KV
-      await spark.kv.delete('auth_user')
-      await spark.kv.delete('auth_loading')
-      
-      // Clear any session-related data
-      await spark.kv.delete('profile_data')
+      try {
+        await spark.kv.delete('auth_user')
+        await spark.kv.delete('auth_loading')
+        await spark.kv.delete('profile_data')
+        await spark.kv.delete('chat_messages')
+      } catch (kvError) {
+        console.warn('Some KV cleanup failed:', kvError)
+      }
       
       toast.success('Successfully signed out')
       console.log('User logged out successfully')
@@ -56,6 +68,7 @@ export function useAuth() {
       console.error('Error during logout:', error)
       // Still clear the current user even if cleanup fails
       setCurrentUser(null)
+      setIsLoading(false)
       toast.success('Signed out')
     }
   }

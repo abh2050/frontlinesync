@@ -26,7 +26,7 @@ const initializeGemini = async () => {
   // Fallback to environment variable or demo key
   if (!apiKey) {
     // Check if we're in development and try to get from import.meta.env
-    const envKey = typeof import !== 'undefined' && import.meta?.env?.VITE_GEMINI_API_KEY
+    const envKey = (typeof import !== 'undefined' && import.meta?.env?.VITE_GEMINI_API_KEY) || null
     apiKey = envKey || 'demo-key'
   }
 

@@ -19,10 +19,22 @@ export default function LoginScreen() {
 
   const demoLogin = async (role: 'employee' | 'manager') => {
     const demoEmail = role === 'manager' ? 'manager@workforce.com' : 'employee@workforce.com'
+    console.log(`Attempting demo login for ${role} with email: ${demoEmail}`)
+    
     setEmail(demoEmail)
     setPassword('demo123')
+    
     // Automatically login with demo credentials
-    await login(demoEmail, 'demo123')
+    try {
+      const result = await login(demoEmail, 'demo123')
+      console.log('Demo login result:', result)
+      if (!result.success) {
+        toast.error(`Demo login failed: ${result.error}`)
+      }
+    } catch (error) {
+      console.error('Demo login error:', error)
+      toast.error('Demo login failed. Please try again.')
+    }
   }
 
   return (
