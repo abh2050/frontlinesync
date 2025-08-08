@@ -45,8 +45,10 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
   const navItems = user?.role === 'manager' ? managerNavItems : employeeNavItems
 
   const handleLogout = async () => {
-    await logout()
+    console.log('Layout: Logout initiated')
     setShowLogoutDialog(false)
+    await logout()
+    console.log('Layout: Logout completed')
   }
 
   return (
