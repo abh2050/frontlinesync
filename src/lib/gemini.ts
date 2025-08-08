@@ -11,32 +11,27 @@ let genAI: GoogleGenerativeAI | null = null
 const initializeGemini = async () => {
   if (genAI) return genAI
 
-  // Try to get API key from KV storage first, then fallback to environment
+  // Try to get API key from KV storage first
   let apiKey = ''
   
   try {
     const storedKey = await spark.kv.get<string>('gemini_api_key')
     if (storedKey) {
       apiKey = storedKey
+      console.log('Found stored Gemini API key')
     }
   } catch (error) {
-    console.log('No stored Gemini API key found')
+    console.log('No stored Gemini API key found:', error)
   }
 
-  // Fallback to environment variable or demo key
   if (!apiKey) {
-    // Check if we're in development and try to get from import.meta.env
-    const envKey = (typeof window !== 'undefined' && (window as any).import?.meta?.env?.VITE_GEMINI_API_KEY) || null
-    apiKey = envKey || 'demo-key'
-  }
-
-  if (apiKey === 'demo-key') {
-    console.warn('Using demo mode - Gemini API not configured')
+    console.warn('No Gemini API key configured - using fallback responses')
     return null
   }
 
   try {
     genAI = new GoogleGenerativeAI(apiKey)
+    console.log('Gemini AI initialized successfully')
     return genAI
   } catch (error) {
     console.error('Failed to initialize Gemini:', error)

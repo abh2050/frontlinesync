@@ -14,6 +14,27 @@ function App() {
   const { isAuthenticated, user } = useAuth()
   const [currentView, setCurrentView] = useState('dashboard')
 
+  // Setup Gemini API key on app initialization
+  useEffect(() => {
+    const initializeGemini = async () => {
+      try {
+        // Check if Gemini key is already configured
+        const existingKey = await spark.kv.get<string>('gemini_api_key')
+        if (!existingKey) {
+          // Set the API key if not already configured
+          await spark.kv.set('gemini_api_key', 'AIzaSyCTYh7kTsyedMZGTVxCSXgH9CAHCVwMwqI')
+          console.log('✅ Gemini API key configured successfully!')
+        } else {
+          console.log('✅ Gemini API key already configured')
+        }
+      } catch (error) {
+        console.log('Info: Gemini setup -', error)
+      }
+    }
+    
+    initializeGemini()
+  }, [])
+
   // Reset view when user changes or logs out
   useEffect(() => {
     if (user?.role === 'manager') {
