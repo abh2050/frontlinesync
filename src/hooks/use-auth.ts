@@ -75,18 +75,16 @@ export function useAuth() {
       setCurrentUser(null)
       setIsLoading(false)
       
-      // Clear KV data in background
-      setTimeout(async () => {
-        try {
-          await spark.kv.delete('auth_user')
-          await spark.kv.delete('auth_loading') 
-          await spark.kv.delete('profile_data') 
-          await spark.kv.delete('chat_messages')
-          console.log('✅ KV data cleared successfully')
-        } catch (kvError) {
-          console.warn('⚠️ Some KV cleanup failed:', kvError)
-        }
-      }, 0)
+      // Clear KV data immediately (not in background)
+      try {
+        await spark.kv.delete('auth_user')
+        await spark.kv.delete('auth_loading') 
+        await spark.kv.delete('profile_data') 
+        await spark.kv.delete('chat_messages')
+        console.log('✅ KV data cleared successfully')
+      } catch (kvError) {
+        console.warn('⚠️ Some KV cleanup failed:', kvError)
+      }
       
       toast.success('Successfully signed out')
       console.log('✅ User logged out successfully')

@@ -38,7 +38,10 @@ function App() {
   // Reset view when user changes or logs out
   useEffect(() => {
     console.log('App: Auth state changed', { user: user?.email, isAuthenticated })
-    if (user?.role === 'manager') {
+    if (!isAuthenticated) {
+      // User logged out - reset to default
+      setCurrentView('dashboard')
+    } else if (user?.role === 'manager') {
       setCurrentView('analytics')
     } else if (user?.role === 'employee') {
       setCurrentView('dashboard')
