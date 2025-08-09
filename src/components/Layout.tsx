@@ -57,7 +57,7 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
       {/* Header */}
       <header className="bg-card border-b border-border px-4 py-3 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center overflow-hidden shadow-sm">
+          <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden shadow-sm">
             <img 
               src={companyLogo} 
               alt="Company Logo" 
@@ -65,7 +65,7 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
             />
           </div>
           <div>
-            <h1 className="font-semibold text-lg">WorkForce AI</h1>
+            <h1 className="font-semibold text-lg">FrontLine Sync</h1>
             <p className="text-sm text-muted-foreground">{user?.department}</p>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
       <nav className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-card border-r border-border">
         <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4 mb-8">
-            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mr-3 shadow-sm overflow-hidden">
+            <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center mr-3 shadow-sm overflow-hidden">
               <img 
                 src={companyLogo} 
                 alt="Company Logo" 
@@ -151,7 +151,7 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
               />
             </div>
             <div>
-              <h1 className="text-xl font-bold">WorkForce AI</h1>
+              <h1 className="text-xl font-bold">FrontLine Sync</h1>
               <p className="text-sm text-muted-foreground">
                 {user?.role === 'manager' ? 'Manager Portal' : 'Employee Portal'}
               </p>

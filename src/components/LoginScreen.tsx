@@ -47,14 +47,14 @@ export default function LoginScreen() {
       <div className="w-full max-w-md space-y-6">
         {/* Logo and Header */}
         <div className="text-center space-y-2">
-          <div className="mx-auto w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-lg overflow-hidden">
+          <div className="mx-auto w-24 h-24 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-lg overflow-hidden">
             <img 
               src={companyLogo} 
               alt="Company Logo" 
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-3xl font-bold text-foreground">WorkForce AI</h1>
+          <h1 className="text-3xl font-bold text-foreground">FrontLine Sync</h1>
           <p className="text-muted-foreground">Empowering frontline workers with AI assistance</p>
         </div>
 
