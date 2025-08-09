@@ -5,6 +5,9 @@ import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import companyLogo from '@/assets/images/WhatsApp_Image_2025-08-08_at_06.28.26.jpeg'
+import APP_CONFIG from '@/config/app'
+import Footer from '@/components/Footer'
+import DomainIndicator from '@/components/DomainIndicator'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -65,8 +68,11 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
             />
           </div>
           <div>
-            <h1 className="font-semibold text-lg">FrontLine Sync</h1>
-            <p className="text-sm text-muted-foreground">{user?.department}</p>
+            <h1 className="font-semibold text-lg">{APP_CONFIG.appName}</h1>
+            <div className="flex items-center space-x-2">
+              <p className="text-sm text-muted-foreground">{user?.department}</p>
+              <DomainIndicator />
+            </div>
           </div>
         </div>
         
@@ -151,7 +157,7 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
               />
             </div>
             <div>
-              <h1 className="text-xl font-bold">FrontLine Sync</h1>
+              <h1 className="text-xl font-bold">{APP_CONFIG.appName}</h1>
               <p className="text-sm text-muted-foreground">
                 {user?.role === 'manager' ? 'Manager Portal' : 'Employee Portal'}
               </p>
@@ -194,6 +200,11 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
                 <p className="text-xs text-muted-foreground">{user?.email}</p>
               </div>
             </div>
+          </div>
+          
+          {/* Footer with domain reference */}
+          <div className="px-4 pb-4">
+            <Footer showDomain={true} />
           </div>
         </div>
       </nav>

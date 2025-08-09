@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/use-auth'
 import { MessageCircle, Calendar, Shield } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import companyLogo from '@/assets/images/WhatsApp_Image_2025-08-08_at_06.28.26.jpeg'
+import APP_CONFIG from '@/config/app'
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('')
@@ -54,8 +55,8 @@ export default function LoginScreen() {
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-3xl font-bold text-foreground">FrontLine Sync</h1>
-          <p className="text-muted-foreground">Empowering frontline workers with AI assistance</p>
+          <h1 className="text-3xl font-bold text-foreground">{APP_CONFIG.appName}</h1>
+          <p className="text-muted-foreground">{APP_CONFIG.tagline}</p>
         </div>
 
         {/* Features Preview */}
@@ -153,6 +154,8 @@ export default function LoginScreen() {
 
         <p className="text-center text-sm text-muted-foreground">
           Secure authentication powered by enterprise-grade security
+          <br />
+          <span className="text-xs">Visit us at <a href={APP_CONFIG.domain} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">frontlinesync.com</a></span>
         </p>
       </div>
     </div>

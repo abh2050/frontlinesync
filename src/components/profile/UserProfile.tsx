@@ -30,9 +30,11 @@ import {
   CheckCircle,
   AlertTriangle,
   Star,
-  Edit
+  Edit,
+  Globe
 } from '@phosphor-icons/react'
 import { Credential, User as UserType } from '@/types'
+import APP_CONFIG from '@/config/app'
 
 export default function UserProfile() {
   const { user, logout } = useAuth()
@@ -317,6 +319,19 @@ export default function UserProfile() {
                 <p className="text-sm text-muted-foreground">Control your privacy settings</p>
               </div>
               <Button variant="outline">Manage</Button>
+            </div>
+            
+            <div className="flex items-center justify-between py-2">
+              <div>
+                <h3 className="font-medium">Visit Website</h3>
+                <p className="text-sm text-muted-foreground">Learn more about {APP_CONFIG.appName}</p>
+              </div>
+              <Button variant="outline" asChild>
+                <a href={APP_CONFIG.domain} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2">
+                  <Globe className="w-4 h-4" />
+                  <span>frontlinesync.com</span>
+                </a>
+              </Button>
             </div>
             
             <div className="flex items-center justify-between py-2 border-t pt-4">
