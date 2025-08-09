@@ -4,8 +4,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuth } from '@/hooks/use-auth'
-import { Users, MessageCircle, Calendar, Shield } from '@phosphor-icons/react'
+import { MessageCircle, Calendar, Shield } from '@phosphor-icons/react'
 import { toast } from 'sonner'
+import companyLogo from '@/assets/images/WhatsApp_Image_2025-08-08_at_06.28.26.jpeg'
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('')
@@ -46,8 +47,12 @@ export default function LoginScreen() {
       <div className="w-full max-w-md space-y-6">
         {/* Logo and Header */}
         <div className="text-center space-y-2">
-          <div className="mx-auto w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-4">
-            <Users className="w-8 h-8 text-primary-foreground" />
+          <div className="mx-auto w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-lg overflow-hidden">
+            <img 
+              src={companyLogo} 
+              alt="Company Logo" 
+              className="w-full h-full object-contain"
+            />
           </div>
           <h1 className="text-3xl font-bold text-foreground">WorkForce AI</h1>
           <p className="text-muted-foreground">Empowering frontline workers with AI assistance</p>
