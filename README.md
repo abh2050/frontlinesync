@@ -144,6 +144,17 @@ The application automatically deploys to GitHub Pages when changes are pushed to
 3. **Live Deployment**: Updates are reflected on the live site
 4. **Custom Domain**: Available at www.frontlinesync.com
 
+### 📋 Compliance & Legal
+- **Privacy Policy**: [/privacy.html](https://www.frontlinesync.com/privacy.html)
+- **Terms of Service**: [/terms.html](https://www.frontlinesync.com/terms.html)
+- **Contact**: [/contact.html](https://www.frontlinesync.com/contact.html)
+
+### 🔍 SEO Ready
+- Sitemap.xml and robots.txt configured
+- Open Graph and Twitter Card meta tags
+- Structured data for search engines
+- Mobile-responsive design
+
 ## 🤝 Contributing
 
 We welcome contributions to improve FrontLine Sync! Please:

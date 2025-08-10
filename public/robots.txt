@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.frontlinesync.com/sitemap.xml
+
+# Important pages
+Allow: /privacy.html
+Allow: /terms.html
+Allow: /contact.html
+
+# Block sensitive areas
+Disallow: /admin
+Disallow: /.git
+
+# Cache directive
+Cache-delay: 86400
