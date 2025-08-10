@@ -1,5 +1,7 @@
 # 🏥 FrontLine Sync
 
+![](https://github.com/abh2050/frontlinesync/blob/main/src/assets/images/WhatsApp_Image_2025-08-08_at_06.28.26.jpeg)
+
 > **Empowering frontline workers with AI-powered assistance and seamless operational management**
 
 FrontLine Sync is a comprehensive web application designed to support frontline workers in healthcare, hospitality, and service industries. Built with modern React and TypeScript, it provides an intuitive interface for managing shifts, accessing AI assistance, and maintaining compliance with industry standards.
