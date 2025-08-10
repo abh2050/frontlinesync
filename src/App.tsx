@@ -21,9 +21,7 @@ function App() {
         // Check if Gemini key is already configured
         const existingKey = await spark.kv.get<string>('gemini_api_key')
         if (!existingKey) {
-          // Set the API key if not already configured
-          await spark.kv.set('gemini_api_key', 'AIzaSyCTYh7kTsyedMZGTVxCSXgH9CAHCVwMwqI')
-          console.log('✅ Gemini API key configured successfully!')
+          console.log('⚠️ No Gemini API key configured. Please configure in Admin settings.')
         } else {
           console.log('✅ Gemini API key already configured')
         }
