@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/use-kv'
 import { useAuth } from '@/hooks/use-auth'
 import { 
   Key, 
@@ -12,7 +12,7 @@ import {
   CheckCircle, 
   XCircle, 
   Info,
-  ExternalLink 
+  ArrowSquareOut 
 } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import { setGeminiApiKey, isGeminiConfigured } from '@/lib/gemini'
@@ -226,7 +226,7 @@ export default function GeminiConfig() {
                 className="mt-2"
                 onClick={() => window.open('https://makersuite.google.com/app/apikey', '_blank')}
               >
-                <ExternalLink className="w-4 h-4 mr-2" />
+                <ArrowSquareOut className="w-4 h-4 mr-2" />
                 Get API Key
               </Button>
             </div>

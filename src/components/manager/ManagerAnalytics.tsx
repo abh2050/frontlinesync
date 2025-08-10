@@ -2,16 +2,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/use-kv'
 import { 
   TrendUp, 
   TrendDown, 
   Users, 
   Clock, 
-  Shield, 
-  MessageCircle,
-  Calendar,
-  AlertTriangle,
+  ShieldCheck, 
+  Chat,
+  CalendarBlank,
+  Warning,
   CheckCircle,
   Target
 } from '@phosphor-icons/react'
@@ -64,29 +64,29 @@ function MetricCard({ title, value, change, changeType, icon: Icon, description 
 }
 
 export default function ManagerAnalytics() {
-  const [teamMetrics] = useKV('team_metrics', {
+  const teamMetrics = useKV('team_metrics', {
     shiftCoverage: 94,
     teamSize: 28,
     complianceRate: 96,
     aiEngagement: 87,
     avgResponseTime: 45,
     scheduleEfficiency: 91
-  })
+  }).value
 
-  const [alerts] = useKV('manager_alerts', [
+  const alerts = useKV('manager_alerts', [
     { id: 1, type: 'warning', message: 'Weekend shift coverage below target', priority: 'high' },
     { id: 2, type: 'info', message: '3 certifications expiring this month', priority: 'medium' },
     { id: 3, type: 'success', message: 'Team AI engagement up 15%', priority: 'low' }
-  ])
+  ]).value
 
-  const [teamPerformance] = useKV('team_performance', [
+  const teamPerformance = useKV('team_performance', [
     { name: 'Alex Rivera', department: 'Kitchen', compliance: 98, shifts: 22, aiUsage: 95 },
     { name: 'Maria Santos', department: 'Front of House', compliance: 94, shifts: 20, aiUsage: 88 },
     { name: 'James Chen', department: 'Kitchen', compliance: 92, shifts: 25, aiUsage: 76 },
     { name: 'Sarah Kim', department: 'Cleaning', compliance: 100, shifts: 18, aiUsage: 92 }
-  ])
+  ]).value
 
-  const [weeklyShifts] = useKV('weekly_shifts', [
+  const weeklyShifts = useKV('weekly_shifts', [
     { day: 'Mon', scheduled: 24, filled: 24, available: 0 },
     { day: 'Tue', scheduled: 26, filled: 25, available: 1 },
     { day: 'Wed', scheduled: 28, filled: 26, available: 2 },
@@ -94,13 +94,13 @@ export default function ManagerAnalytics() {
     { day: 'Fri', scheduled: 32, filled: 28, available: 4 },
     { day: 'Sat', scheduled: 35, filled: 30, available: 5 },
     { day: 'Sun', scheduled: 30, filled: 28, available: 2 }
-  ])
+  ]).value
 
   const getAlertIcon = (type: string) => {
     switch (type) {
-      case 'warning': return AlertTriangle
+      case 'warning': return Warning
       case 'success': return CheckCircle
-      default: return MessageCircle
+      default: return Chat
     }
   }
 
@@ -129,7 +129,7 @@ export default function ManagerAnalytics() {
           value={`${teamMetrics.shiftCoverage}%`}
           change={2.1}
           changeType="positive"
-          icon={Calendar}
+          icon={CalendarBlank}
           description="Target: 95%"
         />
         <MetricCard
@@ -145,7 +145,7 @@ export default function ManagerAnalytics() {
           value={`${teamMetrics.complianceRate}%`}
           change={1.8}
           changeType="positive"
-          icon={Shield}
+          icon={ShieldCheck}
           description="Certifications up to date"
         />
         <MetricCard
@@ -153,7 +153,7 @@ export default function ManagerAnalytics() {
           value={`${teamMetrics.aiEngagement}%`}
           change={12.3}
           changeType="positive"
-          icon={MessageCircle}
+          icon={Chat}
           description="Daily active users"
         />
       </div>
@@ -162,7 +162,7 @@ export default function ManagerAnalytics() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <AlertTriangle className="w-5 h-5" />
+            <Warning className="w-5 h-5" />
             <span>Priority Alerts</span>
           </CardTitle>
           <CardDescription>

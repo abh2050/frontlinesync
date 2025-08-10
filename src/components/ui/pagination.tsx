@@ -1,6 +1,6 @@
 import { ComponentProps } from "react"
-import ChevronLeftIcon from "lucide-react/dist/esm/icons/chevron-left"
-import ChevronRightIcon from "lucide-react/dist/esm/icons/chevron-right"
+import CaretLeftIcon from "lucide-react/dist/esm/icons/chevron-left"
+import CaretRightIcon from "lucide-react/dist/esm/icons/chevron-right"
 import MoreHorizontalIcon from "lucide-react/dist/esm/icons/more-horizontal"
 
 import { cn } from "@/lib/utils"
@@ -74,7 +74,7 @@ function PaginationPrevious({
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
-      <ChevronLeftIcon />
+      <CaretLeftIcon />
       <span className="hidden sm:block">Previous</span>
     </PaginationLink>
   )
@@ -92,7 +92,7 @@ function PaginationNext({
       {...props}
     >
       <span className="hidden sm:block">Next</span>
-      <ChevronRightIcon />
+      <CaretRightIcon />
     </PaginationLink>
   )
 }

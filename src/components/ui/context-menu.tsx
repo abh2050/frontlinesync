@@ -3,7 +3,7 @@
 import { ComponentProps } from "react"
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
 import CheckIcon from "lucide-react/dist/esm/icons/check";
-import ChevronRightIcon from "lucide-react/dist/esm/icons/chevron-right"
+import CaretRightIcon from "lucide-react/dist/esm/icons/chevron-right"
 import CircleIcon from "lucide-react/dist/esm/icons/circle"
 
 import { cn } from "@/lib/utils"
@@ -74,7 +74,7 @@ function ContextMenuSubTrigger({
       {...props}
     >
       {children}
-      <ChevronRightIcon className="ml-auto" />
+      <CaretRightIcon className="ml-auto" />
     </ContextMenuPrimitive.SubTrigger>
   )
 }

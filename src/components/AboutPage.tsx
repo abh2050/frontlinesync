@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Globe, Mail, Shield, Sparkle } from '@phosphor-icons/react'
+import { Globe, Mail, ShieldCheck, Sparkle } from '@phosphor-icons/react'
 import APP_CONFIG from '@/config/app'
 import companyLogo from '@/assets/images/WhatsApp_Image_2025-08-08_at_06.28.26.jpeg'
 
@@ -61,7 +61,7 @@ export default function AboutPage() {
             </div>
             
             <div className="text-center p-4 bg-secondary/50 rounded-lg">
-              <Shield className="w-8 h-8 text-primary mx-auto mb-2" />
+              <ShieldCheck className="w-8 h-8 text-primary mx-auto mb-2" />
               <h3 className="font-semibold mb-1">Enterprise Security</h3>
               <p className="text-sm text-muted-foreground">SOC 2 Type II Compliant</p>
             </div>
@@ -89,7 +89,7 @@ export default function AboutPage() {
             
             <div className="text-center p-4">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Shield className="w-6 h-6 text-primary" />
+                <ShieldCheck className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold mb-2">Compliance Tracking</h3>
               <p className="text-sm text-muted-foreground">Automated monitoring and certification management</p>

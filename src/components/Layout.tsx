@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react'
-import { House, MessageCircle, Calendar, User, ChartBar, Users, ClipboardText, Shield, Sparkle } from '@phosphor-icons/react'
+import { House, Chat, CalendarBlank, User, ChartBar, Users, ClipboardText, ShieldCheck, Sparkle } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
@@ -32,16 +32,16 @@ export default function Layout({ children, currentView, onViewChange }: LayoutPr
   
   const employeeNavItems = [
     { id: 'dashboard', label: 'Home', icon: House },
-    { id: 'chat', label: 'AI Chat', icon: MessageCircle },
-    { id: 'schedule', label: 'Schedule', icon: Calendar },
+    { id: 'chat', label: 'AI Chat', icon: Chat },
+    { id: 'schedule', label: 'Schedule', icon: CalendarBlank },
     { id: 'profile', label: 'Profile', icon: User },
   ]
 
   const managerNavItems = [
     { id: 'analytics', label: 'Analytics', icon: ChartBar },
     { id: 'team', label: 'Team', icon: Users },
-    { id: 'schedule', label: 'Schedule', icon: Calendar },
-    { id: 'compliance', label: 'Compliance', icon: Shield },
+    { id: 'schedule', label: 'Schedule', icon: CalendarBlank },
+    { id: 'compliance', label: 'Compliance', icon: ShieldCheck },
     { id: 'sops', label: 'SOPs', icon: ClipboardText },
     { id: 'ai-config', label: 'AI Settings', icon: Sparkle },
   ]

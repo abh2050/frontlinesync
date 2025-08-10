@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuth } from '@/hooks/use-auth'
-import { MessageCircle, Calendar, Shield } from '@phosphor-icons/react'
+import { Chat, CalendarBlank, ShieldCheck } from '@phosphor-icons/react'
 import { toast } from 'sonner'
 import companyLogo from '@/assets/images/WhatsApp_Image_2025-08-08_at_06.28.26.jpeg'
 import APP_CONFIG from '@/config/app'
@@ -62,15 +62,15 @@ export default function LoginScreen() {
         {/* Features Preview */}
         <div className="grid grid-cols-3 gap-4 text-center">
           <div className="space-y-2">
-            <MessageCircle className="w-8 h-8 text-accent mx-auto" />
+            <Chat className="w-8 h-8 text-accent mx-auto" />
             <p className="text-sm text-muted-foreground">AI Chat</p>
           </div>
           <div className="space-y-2">
-            <Calendar className="w-8 h-8 text-accent mx-auto" />
+            <CalendarBlank className="w-8 h-8 text-accent mx-auto" />
             <p className="text-sm text-muted-foreground">Smart Scheduling</p>
           </div>
           <div className="space-y-2">
-            <Shield className="w-8 h-8 text-accent mx-auto" />
+            <ShieldCheck className="w-8 h-8 text-accent mx-auto" />
             <p className="text-sm text-muted-foreground">Compliance Tracking</p>
           </div>
         </div>

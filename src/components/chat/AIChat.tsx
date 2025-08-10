@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/use-kv'
 import { useAuth } from '@/hooks/use-auth'
 import { 
   PaperPlaneRight, 
@@ -24,12 +24,42 @@ import { toast } from 'sonner'
 
 export default function AIChat() {
   const { user } = useAuth()
-  const [messages, setMessages] = useKV<ChatMessage[]>('chat_messages', [])
+  const messagesKV = useKV<ChatMessage[]>('chat_messages', [])
+  const messages = messagesKV.value
+  const setMessages = messagesKV.set
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [geminiEnabled, setGeminiEnabled] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // Initialize with sample chat data if empty
+  useEffect(() => {
+    if (messages.length === 0) {
+      console.log('Initializing sample chat messages...')
+      const sampleMessages: ChatMessage[] = [
+        {
+          id: '1',
+          content: 'Hi! I\'m your AI assistant. I can help you with workplace procedures, safety guidelines, and answer any questions you have. What would you like to know?',
+          role: 'assistant',
+          timestamp: new Date(Date.now() - 10 * 60 * 1000).toISOString()
+        },
+        {
+          id: '2',
+          content: 'What are the proper handwashing procedures in the kitchen?',
+          role: 'user',
+          timestamp: new Date(Date.now() - 8 * 60 * 1000).toISOString()
+        },
+        {
+          id: '3',
+          content: 'Great question! Here are the proper handwashing steps:\n\n1. Wet hands with warm water\n2. Apply soap and lather for at least 20 seconds\n3. Scrub all surfaces including between fingers and under nails\n4. Rinse thoroughly with warm water\n5. Dry with clean paper towels\n6. Use paper towel to turn off faucet\n\nRemember to wash hands before handling food, after touching raw ingredients, and after using the restroom.',
+          role: 'assistant',
+          timestamp: new Date(Date.now() - 7 * 60 * 1000).toISOString()
+        }
+      ]
+      setMessages(sampleMessages)
+    }
+  }, [messages.length, setMessages])
 
   // Generate dynamic quick suggestions based on user role
   const quickSuggestions = generateQuickSuggestions(
@@ -72,7 +102,7 @@ export default function AIChat() {
       timestamp: new Date().toISOString()
     }
 
-    setMessages(prev => [...prev, userMessage])
+    setMessages([...messages, userMessage])
     setInputValue('')
     setIsLoading(true)
 
@@ -89,7 +119,6 @@ export default function AIChat() {
         user?.role || 'employee',
         {
           department: user?.department,
-          location: user?.location,
           previousMessages: recentMessages
         }
       )
@@ -102,7 +131,7 @@ export default function AIChat() {
         type: 'text'
       }
       
-      setMessages(prev => [...prev, responseMessage])
+      setMessages([...messages, responseMessage])
       
       // Show success toast if using Gemini
       if (geminiEnabled) {
@@ -121,7 +150,7 @@ export default function AIChat() {
         type: 'text'
       }
       
-      setMessages(prev => [...prev, errorMessage])
+      setMessages([...messages, errorMessage])
       toast.error('AI response failed, please try again')
     } finally {
       setIsLoading(false)

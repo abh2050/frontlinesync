@@ -19,18 +19,18 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { useAuth } from '@/hooks/use-auth'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from '@/hooks/use-kv'
 import { 
   User, 
-  Shield, 
-  Calendar, 
+  ShieldCheck, 
+  CalendarBlank, 
   Clock, 
   Plus, 
   Upload,
   CheckCircle,
-  AlertTriangle,
+  Warning,
   Star,
-  Edit,
+  PencilSimple,
   Globe
 } from '@phosphor-icons/react'
 import { Credential, User as UserType } from '@/types'
@@ -38,10 +38,14 @@ import APP_CONFIG from '@/config/app'
 
 export default function UserProfile() {
   const { user, logout } = useAuth()
-  const [isEditing, setIsEditing] = useState(false)
+  const [isPencilSimpleing, setIsPencilSimpleing] = useState(false)
   const [showLogoutDialog, setShowLogoutDialog] = useState(false)
-  const [credentials, setCredentials] = useKV<Credential[]>('user_credentials', [])
-  const [profileData, setProfileData] = useKV<Partial<UserType>>('profile_data', {})
+  const credentialsKV = useKV<Credential[]>('user_credentials', [])
+  const credentials = credentialsKV.value
+  const setCredentials = credentialsKV.set
+  const profileDataKV = useKV<Partial<UserType>>('profile_data', {})
+  const profileData = profileDataKV.value
+  const setProfileData = profileDataKV.set
 
   const activeCredentials = credentials.filter(c => c.status === 'active')
   const expiredCredentials = credentials.filter(c => c.status === 'expired')
@@ -76,9 +80,9 @@ export default function UserProfile() {
           <h1 className="text-2xl font-bold">My Profile</h1>
           <p className="text-muted-foreground">Manage your information and credentials</p>
         </div>
-        <Button variant="outline" onClick={() => setIsEditing(!isEditing)}>
-          <Edit className="w-4 h-4 mr-2" />
-          {isEditing ? 'Save Changes' : 'Edit Profile'}
+        <Button variant="outline" onClick={() => setIsPencilSimpleing(!isPencilSimpleing)}>
+          <PencilSimple className="w-4 h-4 mr-2" />
+          {isPencilSimpleing ? 'Save Changes' : 'PencilSimple Profile'}
         </Button>
       </div>
 
@@ -103,7 +107,7 @@ export default function UserProfile() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label>Full Name</Label>
-                  {isEditing ? (
+                  {isPencilSimpleing ? (
                     <Input defaultValue={user?.name} />
                   ) : (
                     <p className="text-lg font-semibold">{user?.name}</p>
@@ -111,7 +115,7 @@ export default function UserProfile() {
                 </div>
                 <div>
                   <Label>Email</Label>
-                  {isEditing ? (
+                  {isPencilSimpleing ? (
                     <Input defaultValue={user?.email} />
                   ) : (
                     <p className="text-lg">{user?.email}</p>
@@ -119,7 +123,7 @@ export default function UserProfile() {
                 </div>
                 <div>
                   <Label>Department</Label>
-                  {isEditing ? (
+                  {isPencilSimpleing ? (
                     <Input defaultValue={user?.department} />
                   ) : (
                     <p className="text-lg">{user?.department}</p>
@@ -152,7 +156,7 @@ export default function UserProfile() {
                 {skill}
               </Badge>
             ))}
-            {isEditing && (
+            {isPencilSimpleing && (
               <Button variant="outline" size="sm">
                 <Plus className="w-4 h-4 mr-1" />
                 Add Skill
@@ -167,7 +171,7 @@ export default function UserProfile() {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Shield className="w-5 h-5" />
+              <ShieldCheck className="w-5 h-5" />
               <span>Certification Progress</span>
             </div>
             <span className="text-sm text-muted-foreground">{completionPercentage}% Complete</span>
@@ -187,7 +191,7 @@ export default function UserProfile() {
               <p className="text-sm text-muted-foreground">Pending</p>
             </div>
             <div className="text-center p-4 border rounded-lg">
-              <AlertTriangle className="w-8 h-8 text-red-500 mx-auto mb-2" />
+              <Warning className="w-8 h-8 text-red-500 mx-auto mb-2" />
               <p className="text-2xl font-bold text-red-600">{expiredCredentials.length}</p>
               <p className="text-sm text-muted-foreground">Expired</p>
             </div>

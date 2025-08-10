@@ -1,14 +1,7 @@
 import { createContext, useContext, ReactNode } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useKV } from './use-kv'
 import { User } from '../types'
 import { toast } from 'sonner'
-
-// Spark runtime global (provided by @github/spark/spark at runtime)
-declare const spark: {
-  kv: {
-    delete: (key: string) => Promise<void>
-  }
-}
 
 type AuthContextValue = {
   user: User | null | undefined
@@ -21,8 +14,13 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [currentUser, setCurrentUser] = useKV<User | null>('auth_user', null)
-  const [isLoading, setIsLoading] = useKV<boolean>('auth_loading', false)
+  const currentUserKV = useKV<User | null>('auth_user', null)
+  const isLoadingKV = useKV<boolean>('auth_loading', false)
+  
+  const currentUser = currentUserKV.value
+  const setCurrentUser = currentUserKV.set
+  const isLoading = isLoadingKV.value
+  const setIsLoading = isLoadingKV.set
 
   const login = async (email: string, password: string) => {
     setIsLoading(true)
