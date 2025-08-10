@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Globe, Mail, ShieldCheck, Sparkle } from '@phosphor-icons/react'
+import { Globe, Envelope, ShieldCheck, Sparkle } from '@phosphor-icons/react'
 import APP_CONFIG from '@/config/app'
 import companyLogo from '@/assets/images/WhatsApp_Image_2025-08-08_at_06.28.26.jpeg'
 
@@ -55,7 +55,7 @@ export default function AboutPage() {
           
           <div className="grid md:grid-cols-2 gap-4 mt-6">
             <div className="text-center p-4 bg-secondary/50 rounded-lg">
-              <Mail className="w-8 h-8 text-primary mx-auto mb-2" />
+              <Envelope className="w-8 h-8 text-primary mx-auto mb-2" />
               <h3 className="font-semibold mb-1">Contact Support</h3>
               <p className="text-sm text-muted-foreground">{APP_CONFIG.supportEmail}</p>
             </div>
